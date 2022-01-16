@@ -43,3 +43,9 @@ def generate_metrics(image_before: np.array, image_after: np.array) -> tuple:
   MSE = metrics.mean_squared_error(image_before, image_after)
 
   return (PSNR, MSE)
+
+def base_f(x, K, b):
+  return (1 / 2) * (np.linalg.norm(A(x, K) - b, 2) ** 2)
+
+def base_df(x, K, b):
+  return AT(A(x, K), K) - AT(b, K)
