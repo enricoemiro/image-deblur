@@ -1,4 +1,5 @@
 import os
+import sys
 import pytz
 import datetime
 
@@ -24,8 +25,8 @@ def generate_dataset(number_of_images: int, path: str) -> None:
 
 def zero(number_of_images: int, path: str, generate: bool = False):
   if not os.path.isdir(path):
-    raise NotADirectoryError(f'The path "{path}" does not exist.\u0020' \
-                              'Please create it before running the script.')
+    sys.exit(f'The path "{path}" does not exist.\u0020' \
+              'Please create it before running the script.')
 
   if generate == True:
     generate_dataset(number_of_images, path)
