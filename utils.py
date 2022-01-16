@@ -1,6 +1,7 @@
 import numpy as np
 
 from numpy import fft
+from skimage import metrics
 
 # Create a Gaussian kernel of size kernlen and standard deviation sigma
 def gaussian_kernel(kernlen, sigma):
@@ -36,3 +37,9 @@ def A(x, K):
 def AT(x, K):
   x = fft.fft2(x)
   return np.real(fft.ifft2(np.conj(K) * x))
+
+def generate_metrics(image_before: np.array, image_after: np.array) -> tuple:
+  PSNR = metrics.peak_signal_noise_ratio(image_before, image_after)
+  MSE = metrics.mean_squared_error(image_before, image_after)
+
+  return (PSNR, MSE)
