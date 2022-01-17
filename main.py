@@ -11,6 +11,9 @@ from utils import psf_fft, gaussian_kernel
 
 figure = plt.figure(figsize=(20, 20), frameon=False)
 
+def normalize_zero_one(image) -> np.array:
+  return (image - np.amin(image)) / (np.amax(image) - np.amin(image))
+
 def write_metrics(file, metrics):
   file.write(f'{metrics[0]},{metrics[1]}\n')
 
@@ -25,7 +28,7 @@ def add_to_figure(image: np.array, title: str, position: int, metrics = None):
 
 def run(path: str, sigma, kernlen, standard_deviation, llambda, show_plot = True, save_data = True):
   # Load the image from the path and calculate K
-  original_image = plt.imread(path, format='png').astype(np.float64)
+  original_image = normalize_zero_one(plt.imread(path, format='png').astype(np.float64))
   K = psf_fft(gaussian_kernel(kernlen, sigma), kernlen, original_image.shape)
 
   # Phase 1 to 4

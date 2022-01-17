@@ -76,7 +76,7 @@ def grad_totvar(x):
   return -div
 
 def generate_metrics(image_before: np.array, image_after: np.array) -> tuple:
-  PSNR = metrics.peak_signal_noise_ratio(image_before, image_after)
+  PSNR = metrics.peak_signal_noise_ratio(image_before, image_after, data_range=1)
   MSE = metrics.mean_squared_error(image_before, image_after)
 
   return (PSNR, MSE)
