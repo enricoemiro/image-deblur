@@ -38,6 +38,43 @@ def AT(x, K):
   x = fft.fft2(x)
   return np.real(fft.ifft2(np.conj(K) * x))
 
+eps = 1e-2
+
+# Variazione totale
+def totvar(x):
+  # Calcola il gradiente di x
+  dx, dy = np.gradient(x)
+  n2 = np.square(dx) + np.square(dy)
+
+  # Calcola la variazione totale di x
+  tv = np.sqrt(n2 + eps**2).sum()
+  return tv
+
+# Gradiente della variazione totale
+def grad_totvar(x):
+  # Calcola il numeratore della frazione
+  dx, dy = np.gradient(x)
+
+  # Calcola il denominatore della frazione
+  n2 = np.square(dx) + np.square(dy)
+  den = np.sqrt(n2 + eps**2)
+
+  # Calcola le due componenti di F dividendo il gradiente per il denominatore
+  Fx = dx / den
+  Fy = dy / den
+
+  # Calcola la derivata orizzontale di Fx
+  dFdx = np.gradient(Fx, axis=0)
+
+  # Calcola la derivata verticale di Fy
+  dFdy = np.gradient(Fy, axis=1)
+
+  # Calcola la divergenza
+  div = (dFdx + dFdy)
+
+  # Restituisci il valore del gradiente della variazione totale
+  return -div
+
 def generate_metrics(image_before: np.array, image_after: np.array) -> tuple:
   PSNR = metrics.peak_signal_noise_ratio(image_before, image_after)
   MSE = metrics.mean_squared_error(image_before, image_after)
@@ -130,3 +167,9 @@ def regularization_f(x, K, b, llambda):
 
 def regularization_df(x, K, b, llambda):
   return base_df(x, K, b) + (llambda * x)
+
+def total_variation_f(x, K, b, llambda):
+  return base_f(x, K ,b) + (llambda * totvar(b))
+
+def total_variation_df(x, K, b, llambda):
+  return base_df(x, K, b) + (llambda * grad_totvar(x))
