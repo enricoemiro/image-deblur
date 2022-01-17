@@ -4,7 +4,6 @@ import pytz
 import datetime
 
 from skimage import io, data, draw
-from constant import DATASET_SIZE, BASE_DIR
 
 def generate_dataset(number_of_images: int, path: str) -> None:
   for i in range(number_of_images):
@@ -39,7 +38,3 @@ def zero(number_of_images: int, path: str, generate: bool = False):
 
   if generate == True:
     generate_dataset(number_of_images, path)
-
-# Uncomment the following line to run the code.
-#
-# zero(DATASET_SIZE, BASE_DIR, True)
