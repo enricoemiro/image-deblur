@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import csv
+import cv2
 import numpy as np
 
 class Analyzer():
@@ -36,8 +37,16 @@ class Analyzer():
 
     return self
 
+  def __save_images(self, path: str = '.') -> Analyzer:
+    for key, values in self.data.items():
+      image = values['image']
+      cv2.imwrite(f'{path}/{key}.png', cv2.convertScaleAbs(image, alpha=(255.0)))
+
+    return self
+
   def run(self, path: str = '.', filename: str = 'default') -> None:
-    self.__calculate_average_std_psnr_mse()
+    self.__calculate_average_std_psnr_mse() \
+        .__save_images(path)
 
     with open(f'{path}/{filename}.csv', 'w') as file:
       writer = csv.writer(file)
