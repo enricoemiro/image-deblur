@@ -130,7 +130,7 @@ class Executor:
 
     plt.show()
 
-  def run(self) -> None:
+  def run(self, show_plot: bool = True) -> None:
     original_image = self.data['original']['image']
     self.first(original_image)
 
@@ -138,5 +138,6 @@ class Executor:
     self.second(corrupted_image)       \
         .third(corrupted_image)        \
         .third(corrupted_image, False) \
-        .fourth(corrupted_image)       \
-        .plot()
+        .fourth(corrupted_image)
+
+    if show_plot: self.plot()
