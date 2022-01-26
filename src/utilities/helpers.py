@@ -31,7 +31,7 @@ def auto_run(path: str,
                             llambda=llambda,
                             std_dev=std_dev,
                             max_iterations=iteration)
-        executor.run()
+        executor.run(show_plot=False)
 
         analyzer = Analyzer(executor.data)
         analyzer.run(image_dir)
