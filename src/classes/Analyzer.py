@@ -11,26 +11,22 @@ class Analyzer():
     self.metrics = {}
 
   def __calculate_average_std_psnr_mse(self) -> Analyzer:
-    psnr_total = mse_total = 0
-    psnr_arr = mse_arr = np.array([], dtype=np.double)
+    psnr_arr = mse_arr = np.array([], dtype=np.float64)
 
     for values in self.data.values():
       if 'metrics' in values:
         psnr, mse = values['metrics']
-
-        psnr_total += psnr
-        mse_total += mse
 
         psnr_arr = np.append(psnr_arr, psnr)
         mse_arr = np.append(mse_arr, mse)
 
     self.metrics |= {
       'psnr': {
-        'average': psnr_total / len(psnr_arr),
+        'average': np.mean(psnr_arr),
         'std': np.std(psnr_arr)
       },
       'mse': {
-        'average': mse_total / len(mse_arr),
+        'average': np.mean(mse_arr),
         'std': np.std(mse_arr)
       }
     }
