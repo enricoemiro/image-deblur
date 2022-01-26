@@ -116,9 +116,8 @@ class Executor:
   def plot(self) -> None:
     figure = plt.figure(figsize=(8, 8))
 
-    position = 1
-    for v in self.data.values():
-      figure.add_subplot(2, 3, position)
+    for index, v in enumerate(self.data.values(), start=1):
+      figure.add_subplot(2, 3, index)
       plt.axis('off')
 
       title = v['title']
@@ -128,8 +127,6 @@ class Executor:
 
       plt.title(title)
       plt.imshow(v['image'], cmap='gray', vmin=0, vmax=1)
-
-      position += 1
 
     plt.show()
 
