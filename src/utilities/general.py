@@ -46,9 +46,9 @@ def o_minimize(x0, b, K, llambda, f, df, absolute_stop = 1.e-5, max_iterations =
 
   x_k = np.copy(x0)
 
-  norm_grad_list = \
-    function_eval_list = \
-      error_list = np.zeros((1, max_iterations))
+  norm_grad_list = np.zeros((1, max_iterations))
+  function_eval_list = np.zeros((1, max_iterations))
+  error_list = np.zeros((1, max_iterations))
 
   k = 0
   while norm_grad(x_k) > absolute_stop and k < max_iterations:
